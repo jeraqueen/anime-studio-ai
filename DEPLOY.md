@@ -1,0 +1,1 @@
+Cloudflare Pages is connected to this repository. Production branch: main. Build command: none. Output directory: / (repository root). Each new commit to main should trigger a deployment when the Git integration is authorized.
