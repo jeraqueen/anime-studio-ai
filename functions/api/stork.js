@@ -15,8 +15,8 @@ export async function onRequest(context) {
       upstream = await fetch(api,{method:"POST",headers:{Authorization:auth,"Content-Type":"application/json","Idempotency-Key":crypto.randomUUID()},body:JSON.stringify(payload)});
     } else if (request.method === "GET") {
       const id = url.searchParams.get("id");
-      if (!id) return json({error:"Missing job id."},400);
-      upstream = await fetch(api+"?id="+encodeURIComponent(id),{headers:{Authorization:auth}});
+      const query = id ? "?id="+encodeURIComponent(id) : "?limit=1";
+      upstream = await fetch(api+query,{headers:{Authorization:auth}});
     } else return json({error:"Method not allowed."},405);
     const text = await upstream.text();
     return new Response(text,{status:upstream.status,headers:{"Content-Type":upstream.headers.get("content-type")||"application/json","Cache-Control":"no-store"}});
